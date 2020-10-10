@@ -1,0 +1,381 @@
+字符串函数
+
+
+1
+select char_length('str') as 计算字符串个数
+select CHARACTER_LENGTH('str') as 同上
+
+2
+select concat('str1','str2') as 合并字符串
+
+3
+select concat_ws('-','你好','世界') as '同上,第一个参数是连字符'
+
+4
+select ascii('0') as ascii码
+
+5
+select field('c','a','b','c','d') as c在字符串列表的位置
+
+6
+select FIND_IN_SET('c','a,b,c,d') as c在字符串中的位置
+
+7
+select format(123456,2) as '格式化数字,带2位小数.00'
+
+8
+select insert('abc',1,2,'ba') as 从第1个字符开始的第2个字符替换为ba
+
+9
+select locate('c','a,b,c,d') as c在字符串中的位置
+select locate('c','abcd') as c在字符串中的位置
+
+10
+select lcase('STR') as 小写
+select lower('STR') as 小写
+
+11
+select ucase('str') as 大写
+select upper('str') as 大写
+
+12
+select left('abc',2) as 字符串左截取2
+
+13
+select right('abc',2) as 字符串右截取2
+
+14
+select mid('abc',2,1) as 从第二个位置截取1个字符
+
+15
+select lpad('abc',5,'00') as 用00从头填充满5个字符
+
+16
+select ltrim('   str') as 删除左边全部空格
+
+17
+select rtrim('str    ') as 删除右边全部空格
+
+18
+select trim('   str    ') as 删除左右全部空格
+
+19
+select position('b' in 'a,b,c') as b在字符串中的位置
+
+20
+select repeat('a',3) as a重复3次
+
+21
+select replace('abc','b','你') as 用你替换abc中的b
+
+22
+select reverse('abc') as 倒序
+
+23-15
+select rpad('abc',5,'00') as 用00从尾填充满5个字符
+
+24
+select space(3) as 返回3个空格
+
+25
+select strcmp('a','A') as '比较字符串大小,大于-->1,小于-->-1,等于-->0,默认忽略大小写'
+select strcmp(binary 'a','A') as '比较字符串大小,大于-->1,小于-->-1,等于-->0,binary不忽略大小写'
+
+26
+select substr('abc',2,1) as 从字符串2的位置截取1个字符
+
+27
+select substring('abc',2,1) as 同上
+
+28
+select substring_index('aa*bb','*',1) as '先按*分组,是正数返回字符串*左边,1组字符,是负数返回字符串*右边,1组字符'
+select substring_index('aa*bb*cc','*',3) as '先按*分组,是正数返回字符串*左边,3组字符,是负数返回字符串*右边,3组字符'
+select substring_index('aa*bb*cc','*',-3) as '先按*分组,是正数返回字符串*左边,3组字符,是负数返回字符串*右边,3组字符'
+
+
+
+数值函数
+
+1
+select abs(-1) as 绝对值
+
+2
+select 性别,avg(年龄) as 平均值 from ccss_sample group by 性别
+
+3
+select ceil(1.2) as 向上取整
+select ceiling(1.2) as 向上取整
+
+4
+select floor(1.9) as 向下取整
+
+5
+select count(distinct 性别) as 计数 from ccss_sample group by 性别
+
+6
+select 10 div 5 as 除法
+
+7
+select exp(1) as e的1次方
+
+8
+select greatest(3,5,6,8,9,18) as 返回列表最大值
+
+9
+select least(3,5,6,8,9,18) as 返回列表最小值
+
+10
+select ln(2) as 2的自然对数
+
+11
+select log(2,4) as 以2为底4的对数
+
+12
+select max(年龄) as 最大值 from ccss_sample
+
+13
+select min(年龄) as 最小值 from ccss_sample
+
+14
+select mod(10,2) as 取余
+
+15
+select pi() as 圆周率
+
+16
+select pow(2,3) as 2的3次方
+select power(2,3) as 2的3次方
+
+17
+select rand() as '0-1'
+
+18
+select round(1.2) as 四舍五入
+
+19
+select sign(19) as '正数1,负数-1,0-->0'
+
+20
+select sqrt(9) as 平方根
+
+21
+select sum(年龄) as 求和 from ccss_sample
+
+22
+select truncate(1.234567,3) as '保留指定位数,不会四舍五入'
+
+23
+select degrees(pi()) as pi的角度值
+
+24
+select radians(45) as 45°的弧度值
+
+
+
+
+转换函数
+
+1.
+select cast('12.34ab' as float) as 字符串转浮点型
+
+2.
+select str_to_date(hire_date,'%d-%M-%Y') as '字符串转日期型 ,注:M和Y必须大写,d必须小写'
+from employees
+
+
+
+日期函数
+
+
+1.
+select extract(year from 结算日期) as 提取年 from 业务明细
+
+2.
+select year(结算日期) as 年 from 业务明细
+
+3.
+select month(结算日期) as 月 from 业务明细
+
+4.
+select day(结算日期) as 日 from 业务明细
+
+5.
+SELECT current_date() as 当前日期
+
+6.
+select CURRENT_TIMESTAMP() as 返回当前日期和时间
+
+
+
+ 高级函数
+
+
+ 1.
+select commission_pct as '判断 是否为NULL' from employees 
+where isnull(commission_pct) 
+
+
+预置语句
+# 9. 建立存储过程实现以学生姓氏得其学生的名字，以-分隔
+
+set @str1 = concat("SELECT sname FROM student WHERE sname LIKE '" ,xing,"%'");
+PREPARE SQL1 FROM @str1;
+EXECUTE SQL1;
+
+
+
+游标-在存储过程里写
+老师:
+ #给定 c_id , 用游标求出 c_id 最小的分数.
+
+  # 游标停止标志
+ declare flag int default 0; 
+# 当前游标的值. (假定是最小值)
+ declare min_score decimal(10,2) default 0; 
+# 定义一个中间变量
+declare  s decimal(10,2) default 0; 
+# 声明一个游标
+ declare scores CURSOR for select degree from score where cno = c_id;
+  # 声明一个结束标识
+  declare CONTINUE HANDLER for not found set flag = 1; 
+  # 打开游标
+ open scores;
+ FETCH scores into min_score;  -- 87  97  65  70 45
+ while (flag = 0 ) DO
+  fetch scores into s; 
+
+  if ( s < min_score) THEN
+   SET min_score = s; 
+  end IF; 
+ end while;
+  # 关闭游标
+  close scores; 
+  # 打印真正的最小值
+ select min_score;
+
+
+游标-自己:
+
+declare f int default 1; # 游标开始标志
+declare first1 decimal(10,2) default 0; # 成绩的第一个值
+declare zhi decimal(10,2) default 0; # 成绩里的值
+declare scores cursor for select degree from score where sno =n; # 声明一个游标
+declare continue handler for not found set f = 0; # 游标结束标志
+open scores; # 打开游标
+fetch scores into first1; #游标指向第一个值
+while (f = 1 ) do # 循环
+	fetch scores into zhi; # 游标指向下一个值
+	if (zhi < first1) THEN set first1 = zhi; end if; # 找到最小值
+end while; #结束循环
+close scores; # 关闭游标
+select first1; # 打印最小值
+
+
+
+ 注: 存储过程 参数为 : in c_id varchar(255)
+
+ 声明:(只能在存储过程)	declare a int default 0;
+
+ 赋值:
+ 		第一种:set a = 0;
+ 		第二种:0 into a;
+
+声明:(声明时有无冒号都可以)
+	1.set @a = 0;
+	2.set @a: = 0;
+
+赋值:(赋值时必须有冒号!!!)		 @a := 10;
+
+1. sql 语句编写顺序
+
+SELECT 
+DISTINCT <select_list>
+FROM <left_table>
+<join_type> JOIN <right_table>
+ON <join_condition>
+WHERE <where_condition>
+GROUP BY <group_by_list>
+HAVING <having_condition>
+ORDER BY <order_by_condition>
+LIMIT <limit_number>
+
+
+sql执行顺序 
+(1)from 
+(3) join 
+(2) on 
+(4) where 
+(5)group by(开始使用select中的别名，后面的语句中都可以使用)
+(6) avg,sum.... 
+(7)having 
+(8) select 
+(9) distinct 
+(10) order by 
+
+新建表的三种方式:
+1.
+create table if not exists cs(
+id int not null unique primary key auto_increment,
+sname varchar(255),
+datetimes datetime)
+2.
+create table csss like cs; #只复制表结构,不会复制数据;
+3.
+create table css as select * from cs; #即复制表结构也复制数据;
+
+
+插入一条数据二种方式:
+1.
+insert into cs values (1,'jjj','2020.09.08');
+2.
+insert into cs(sname) values ('zzz');
+
+
+插入多条查询结果:
+insert into cs select sno,sname,sbirthday from student;
+
+
+添加一列:
+alter table cs add sex varchar(255);
+
+
+删除一列:
+alter table cs drop sex;
+
+
+删除表:
+drop table css;
+
+
+更改为空的一列的数据类型:
+alter table cs modify column sex int;
+
+
+更新一条记录:
+update cs set sex = 1 where sname = 'jjj';
+
+
+删除一条记录:
+delete from cs where sname = 'zzz';
+
+
+添加一个一般索引的二种方式:
+create index 一般索引 on cs(sname);
+alter table cs add index 一般索引(sname);
+
+添加一个唯一索引:
+create unique index 唯一索引 on cs(id);
+alter table cs add unique index 唯一索引(sname);
+
+添加一个全文索引:
+create fulltext index 全文索引 on cs(sname);
+alter table cs add fulltext index 全文索引(sname);
+
+
+创建一个视图:
+create view student前三行 as (select * from student limit 3);
+
+
+存储过程:		procedure;
+触发器  :		trigger;
+事件    :		event
